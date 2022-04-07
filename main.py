@@ -107,3 +107,60 @@ with open('model.pkl','wb') as f:
 # label = gr.outputs.Label(num_top_classes=len(objects), type="confidences")
 # interface = gr.Interface(fn=classify, inputs="sketchpad", outputs=label, live=True)
 # interface.launch()
+
+
+
+"""
+Dash Components: Sliders, checkboxes, dropdowns, anything that would normally be a component on a web page
+Plotly Graphs: Any graphs created by plotly to visualize data
+The Callback: Connects graphs and components to create interaction
+
+Cool idea: Display objects as labels for a bar chart, where there is no movement within the bar chart (no swapping places) just the bars moving up and down based on the prediction values.
+
+
+
+"""
+
+import dash
+from dash import dcc
+from dash import html
+from dash.dependencies import Input, Output
+from dash_canvas import DashCanvas
+
+app = dash.Dash(__name__)
+
+# -------------------------------------------------------
+# App layout
+
+app.layout = html.Div([
+    
+    html.H1("Ths is a header wooohooooo!!", style={'text-align': 'center'}),
+
+    dcc.Dropdown(id="select_num",
+    options = [
+        {"label": "5", "value": 5},
+        {"label": "7", "value": 7}],
+    multi = False,
+    value = 5,
+    style = {'width': '40%'}
+    ),
+
+    html.H5("Press down the left mouse button and draw inside the cnavas!"),
+
+    # DashCanvas(id="doodle_canvas",
+    # tool="pencil",
+    # lineWidth=15,
+    # lineColor="black",
+    # width=500,
+    # height=1000,
+    # hide_buttons=["zoom", "pan", "line", "pencil", "rectangle", "undo", "select", "save"]),
+
+
+    html.Div(id="output_container", children=[]),
+    html.Br(), 
+
+
+])
+
+if __name__ == "__main__":
+    app.run_server(debug=True)
